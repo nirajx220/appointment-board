@@ -3,21 +3,17 @@ import { SAMPLE_APPOINTMENTS } from "../data/sampleAppointments";
 
 const STORAGE_KEY = "appointment-board:appointments";
 const THEME_KEY = "appointment-board:theme";
-
-
 export function useAppointments() {
   const [appointments, setAppointments] = useState(SAMPLE_APPOINTMENTS);
   const [theme, setTheme] = useState("dark");
   const [ready, setReady] = useState(false);
   const idCounter = useRef(16);
 
-  // Load any previously saved board on first mount.
   useEffect(() => {
     try {
       const savedTheme = localStorage.getItem(THEME_KEY);
       if (savedTheme) setTheme(savedTheme);
     } catch {
-      // localStorage unavailable (e.g. private browsing) — fall back to defaults
     }
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -26,7 +22,6 @@ export function useAppointments() {
         if (Array.isArray(parsed) && parsed.length > 0) setAppointments(parsed);
       }
     } catch {
-      // ignore malformed/missing data — sample appointments stay as the fallback
     }
     setReady(true);
   }, []);
@@ -35,7 +30,6 @@ export function useAppointments() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
     } catch {
-      // storage unavailable — app still works for the current session
     }
   }, []);
 
@@ -56,7 +50,6 @@ export function useAppointments() {
       try {
         localStorage.setItem(THEME_KEY, next);
       } catch {
-        // ignore
       }
       return next;
     });

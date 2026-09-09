@@ -28,13 +28,11 @@ export default function App() {
   const theme = THEMES[themeName];
   const statusColor = STATUS_COLOR[themeName];
 
-  // filters & UI-only state
   const [filterDate, setFilterDate] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [search, setSearch] = useState("");
   const [calendarView, setCalendarView] = useState(() => new Date());
 
-  // modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -51,8 +49,6 @@ export default function App() {
     if (toastTimer.current) clearTimeout(toastTimer.current);
     toastTimer.current = setTimeout(() => setToast(null), 3000);
   };
-
-  // ---------- modal open/close with a short transition ----------
 
   useEffect(() => {
     if (modalOpen) requestAnimationFrame(() => setModalVisible(true));
@@ -83,8 +79,6 @@ export default function App() {
     }, 140);
   };
 
-  // ---------- keyboard shortcuts ----------
-
   useEffect(() => {
     const onKey = (e) => {
       const typing = ["INPUT", "TEXTAREA"].includes(document.activeElement?.tagName);
@@ -100,10 +94,7 @@ export default function App() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [modalOpen, filterDate]);
-
-  // ---------- derived data ----------
 
   const counts = useMemo(
     () => ({
@@ -141,8 +132,6 @@ export default function App() {
       : filterDate
       ? new Date(filterDate + "T00:00:00").toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })
       : "All appointments";
-
-  // ---------- form submit ----------
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -185,8 +174,6 @@ export default function App() {
     setFilterStatus("all");
     setFilterDate(date);
   };
-
-  // ---------- render ----------
 
   return (
     <div

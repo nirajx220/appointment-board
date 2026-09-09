@@ -1,17 +1,7 @@
 import { formatTime } from "./date";
 
-// Two time ranges on the same day overlap if one starts before the other ends.
 export const overlaps = (a, b) => a.start < b.end && b.start < a.end;
 
-/**
- * Validates a new/edited appointment form against the required fields,
- * the start/end ordering, and existing appointments on the same date.
- *
- * @param {object} form - { title, date, start, end, ... }
- * @param {object[]} appointments - all existing appointments
- * @param {string|null} editingId - id of the appointment being edited, if any
- * @returns {object} a map of field -> error message (empty object = valid)
- */
 export function validateAppointment(form, appointments, editingId) {
   const errors = {};
 

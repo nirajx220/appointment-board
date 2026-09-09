@@ -2,8 +2,6 @@ import { todayISO, addDays } from "../utils/date";
 
 export const TODAY = todayISO();
 
-// Seed data so the board is reviewable immediately, covering all three
-// statuses and a couple of "with" assignees across yesterday/today/tomorrow.
 export const SAMPLE_APPOINTMENTS = [
   {
     id: "a1",
